@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}Medicos{% endblock %}
+
+{% block content %}
+
+
+<div class="card">
+
+    <div class="card-header ">
+        <div class="row ">
+            <div class="col-sm-2"> <img class="card-img-top" src="{% static 'Images/medicos.png'%}" alt="Image not found" width="40rem" ></div>
+            <div class="col-sm-4"> <h2><strong>Listado General De Médicos </strong></h2></div>
+            <div class="col-sm-2"> <h3><strong>{% now "d-m-Y" %}</h3></strong></div>
+            <div class="col-sm-2"> <h3><strong>Messages</strong></h3></div>
+            <div class="col-sm-2">
+                <a href="{% url 'A01Seg:MedicoCreate' %}" class="btn btn-primary"> <i class="bi bi-plus-square-fill" >&nbsp;&nbsp;Agregar</i> </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <table class="table table-hover table-striped table-bordered" id="example">
+            <thead >
+                <tr class="table-secondary text-center">
+
+                    <th scope="col" style="width:10%" >Image</th>
+                    <th scope="col" style="width:15%" >Fisrt name</th>
+                    <th scope="col" style="width:15%" >Last name</th>
+                    <th scope="col" style="width:10%" >Phone</th>
+                    <th scope="col" style="width:15%" >Email</th>
+                    <th scope="col" style="width:15%" >Especialidad</th>
+                    <th scope="col" style="width:10%" >Estado</th>
+                    <th scope="col" style="width:10%" >Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in medicos %}
+                <tr>
+                    <td>
+                        <a {% if i.image %} href="{{i.image.url}}" {% endif %} class='btn btn-secondary' target="_blank" title='Ver imagen en una nueva página'>
+                                <img class="img-fluid" {% if i.image %} src="{{i.image.url}}" {% endif %} alt="No image" style="height:auto; width: 5rem">
+                        </a>
+                    </td>
+                    <td scope="row">&nbsp;&nbsp;{{i.user.first_name}}</td>
+                    <td scope="row">&nbsp;&nbsp;{{i.user.last_name}}</td>
+                    <td>&nbsp;&nbsp;{{i.phone}}</br></td>
+                    <td>&nbsp;&nbsp;{{i.user.email}}</td>
+                    <td>&nbsp;&nbsp;{{i.especialidad}}</td>
+                    <td>&nbsp;&nbsp;{{i.get_estado_display}}</td>
+                    <td>
+                        <div class="row justify-content-md-evenly">
+                            <div class="col-4">
+                                <a href="{% url 'A01Seg:MedicoRead' i.id %}"  class='btn btn-info' title='Detalle del paciente: {{i.user.username}}'>
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                {% comment %}     target="_blank" {% endcomment %}
+                            </div>
+                            <div class="col-4">
+                                <a href="" class='btn btn-warning' title='Editar datos del paciente: {{i.user.username}}'>
+                                    <i class="fas fa-pen"></i>
+                                </a>
+                                {% comment %} {% url 'A01Seg:PacienteUpdate' i.id %} {% endcomment %}
+                            </div>
+                            <div class="col-4">
+                                <a href="{% url 'A01Seg:MedicoDelete' i.id %}" class='btn btn-danger btn-actions' title='Borrar paciente: {{i.user.username}}'>
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                                {% comment %} {% url 'A01Seg:PacienteDelete' i.id %} {% endcomment %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

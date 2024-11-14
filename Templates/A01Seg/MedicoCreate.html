@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+{% load static %}
+{% comment %} {% load humanize %} {% endcomment %}
+
+{% block title %}MedicoCreate{% endblock %}
+
+{% block content %}
+
+
+<div class="card">
+    <!-- ENCABEZADO -->
+    <div class="card-header hstack gap-1 ">
+        <div class="row">
+            <div class="col col-sm-3"> <img class="card-img-top" src="{% static 'Images/medicos.png'%}" alt="Image not found" width="50rem" ></div>
+            <div class="col col-sm-5"> <h2><strong>Crear Médico</strong></h2> </div>
+            <div class="col col-sm-3"> <i class="bi bi-bell-fill" style="font-size: 2rem; color: red;"></i> </div>
+            <div class="col col-sm-1 justify-content-evenly"> <a href="{% url 'A01Seg:Medicos' %}" class="btn btn-primary"  title="Ir al Listado de Pacientes"><i class="bi bi-plus-square-fill" >&nbsp;&nbsp;Volver</i></a> </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+
+        <form class="form-control" action="" method='POST' enctype='multipart/form-data' autocomplete='on' class="card p-3 border-dark mt-3">
+            {% csrf_token %}
+
+            <div class="row">
+                <div class="col-2 mt-2 form-floating">
+                    <input value="{{new_user.username}}" type="text" class="form-control" id="username" name="username" placeholder="Usuario" disabled>
+                    <br>
+                    <img class="img-fluid" {% if medico.image != None %} src="{{medico.image.url}}" {% else %} src="{% static 'Images/img_no_disp.png'%}" {% endif %} alt="No image" style="height:auto; width: 15rem">
+                    <input type="file" class="form-control is-valid mt-1" id="image" name="image">
+                </div>
+
+                <div class="col-sm-10">
+                    <div class="row">
+                        <div class="col-3 mt-2 form-floating">
+                            <input value="{{new_user.first_name}}" type="text" class="form-control" id="first_name" name="first_name" placeholder="Nombres" required >
+                            <label for="first_name" class="form-label">Nombres </label>
+                        </div>
+                        <div class="col-3 mt-2 form-floating">
+                            <input value="{{new_user.last_name}}" type="text" class="form-control" id="last_name" name="last_name" placeholder="Apellidos">
+                            <label for="last_name" class="form-label">Apellidos</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 mt-2 form-floating">
+                            <input type="text" class="form-control" id="dni" name="dni" placeholder="123456789-1" >
+                            <label for="dni" class="form-label">DNI</label>
+                        </div>
+                        <div class="col-3 mt-2 form-floating">
+                            <input value="{{new_user.email}}" type="email" class="form-control" id="email" name="email" placeholder="algo@mail.cl">
+                            <label for="email" class="form-label">Correo</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+                {% comment %} <div class="col-5 mt-2 form-floating">
+                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Teléfono">
+                    <label for="phone" class="form-label">Teléfono</label>
+                </div> {% endcomment %}
+            </div>
+
+            {% comment %} <div class="row">
+                <div class="col-2 mt-2 form-floating">
+                    <input type="text" class="form-control" id="pais" name="pais" placeholder="País">
+                    <label for="pais" class="form-label">País</label>
+                </div>
+                <div class="col-2 mt-2 form-floating">
+                    <input type="text" class="form-control" id="comuna" name="comuna" placeholder="Comuna">
+                    <label for="comuna" class="form-label">Comuna</label>
+                </div>
+                <div class="col-8 mt-2 form-floating">
+                    <input type="text" class="form-control" id="direccion" name="direccion" placeholder="Dirección">
+                    <label for="direccion" class="form-label">Dirección</label>
+                </div>
+            </div> {% endcomment %}
+
+            {% comment %} <div class="row">
+                <div class="col-2 mt-2 form-floating">
+                    <input type="date" class="form-control" id="nacim" name="nacim" placeholder="Fecha de Nacimiento">
+                    <label for="nacim" class="form-label">Fecha de Nacimiento</label>
+                </div>
+                <div class="col-2 mt-2 form-floating">
+                    <select name="genero" id="genero" class="form-select" aria-label="Default select example" placeholder="Género" >
+                        <option selected > Esgoge una opción </option>
+                        <option value='M' >Masculino </option>
+                        <option value='F' >Femenino </option>
+                        <option value='O' >Otro </option>
+
+                    </select>
+                    <label for="genero" class="form-label"> Género </label>
+                </div>
+                <div class="col-2 mt-2 form-floating">
+                    <select name="estadoCiv" id="estadoCiv" class="form-select" aria-label="Default select example" placeholder="Estado Civil" >
+                        <option selected > Esgoge una opción </option>
+                        <option value='S' >Soltero </option>
+                        <option value='C' >Casado </option>
+                        <option value='V' >Viudo </option>
+                        <option value='P' >Separado </option>
+                    </select>
+                    <label for="estadoCiv" class="form-label"> Estado Civil </label>
+                </div>
+                <div class="col-2 mt-2 form-floating">
+                    <select name="grupoSangre" id="grupoSangre" class="form-select" aria-label="Default select example" placeholder="Grupo de Sangre" >
+                        <option selected > Esgoge una opción </option>
+                        <option value='1' > 0 </option>
+                        <option value='3' > A </option>
+                        <option value='5' > B </option>
+                        <option value='7' > AB </option>
+                    </select>
+                    <label for="grupoSangre" class="form-label"> Grupo de Sangre </label>
+                </div>
+                <div class="col-2 mt-2 form-floating">
+                    <select name="salud" id="salud" class="form-select" aria-label="Default select example" placeholder="Sistema de Salud" >
+                        <option selected > Esgoge una opción </option>
+                        <option value='Fonasa' > Fonasa </option>
+                        <option value='MasVida' > MasVida </option>
+                        <option value='Cruz Blanca' > Cruz Blanca </option>
+                        <option value='Fusat' > Fusat </option>
+                    </select>
+                    <label for="salud" class="form-label"> Sistema de Salud </label>
+                </div>
+                <div class="col-2 mt-2 form-floating">
+                    <input type="file"  class="form-control is-valid" id="image" name="image" placeholder="Imagen">
+                    <label for="image" class="form-label">Imagen</label>
+                </div>
+            </div> {% endcomment %}
+
+            <div class="row">
+                <div btnGrabar class="col mt-5">
+                    <button class="btn btn-primary" type="submit"><i class="bi bi-cloud-arrow-up"></i>&nbsp;&nbsp;Grabar</i></button>
+                </div>
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+{% endblock %}

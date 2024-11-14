@@ -1,0 +1,7 @@
+h1
+{
+background-image: url("Static/Images/humana-salud-portada.png");
+-webkit-text-fill-color: transparent;
+background-clip: text;
+
+}

@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load static %}
+{% comment %} {% load humanize %} {% endcomment %}
+
+{% block title %}PacienteRead/{{paciente.id}}{% endblock %}
+
+{% block content %}
+
+<div class="card">
+    <!-- ENCABEZADO -->
+    <div class="card-header hstack gap-1 justify-content-evenly">
+        <div class="row">
+            <div class="col col-sm-3"> <div class="w-25"><img class="card-img-top" src="{% static 'Images/pacientes.png'%}" alt="Image not found" width="40rem" ></div> </div>
+            <div class="col col-sm-5"> <h2><strong>Detalle de Paciente</strong></h2> </div>
+            <div class="col col-sm-3"> <i class="bi bi-bell-fill" style="font-size: 2rem; color: red;"></i> </div>
+            <div class="col col-sm-1"> <a href="{% url 'A01Seg:Pacientes' %}" class="btn btn-primary"  title="Ir al Listado de Pacientes"><i class="bi bi-plus-square-fill" >&nbsp;&nbsp;Volver</i></a> </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-2 mt-2 form-floating">
+                <input value="{{paciente.user.username}}" type="text" class="form-control" id="username" name="username" placeholder="Usuario" disabled>
+                <br>
+                <img class="img-fluid" {% if paciente.image != None %} src="{{paciente.image.url}}" {% else %} src="{% static 'Images/img_no_disp.png'%}" {% endif %} alt="No image" style="height:auto; width: 10rem">
+            </div>
+
+            <div class="col-sm-10">
+                <div class="row">
+                    <div class="col-1 col-sm-1"></div>
+                    <div class="col-5 col-sm-3 mt-2 form-floating">
+                        <input value="{{paciente.user.first_name}}" type="text" class="form-control" id="first_name" name="first_name" placeholder="Nombres"  disabled >
+                        <label for="first_name" class="form-label">Nombre </label>
+                    </div>
+                    <div class="col-5 col-sm-3 mt-2 form-floating">
+                        <input value="{{paciente.user.last_name}}" type="text" class="form-control" id="last_name" name="last_name" placeholder="Apellidos" disabled>
+                        <label for="last_name" class="form-label">Apellidos</label>
+                    </div>
+                    <div class="col-5 col-sm-3 mt-2 form-floating">
+                        <input value="{{paciente.dni }}" type="text" class="form-control" id="dni" name="dni" placeholder="123456789-1"  disabled>
+                        <label for="dni" class="form-label">DNI</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-1 col-sm-1"></div>
+                    <div class="col-5 col-sm-3 mt-2 form-floating">
+                        <input value="{{paciente.user.email }}" type="email" class="form-control" id="email" name="email" placeholder="algo@mail.cl" disabled>
+                        <label for="email" class="form-label">Correo</label>
+                    </div>
+                    <div class="col-5 col-sm-3 mt-2 form-floating">
+                        <input value="{{paciente.phone }}" type="text" class="form-control" id="phone" name="phone" placeholder="Teléfono" disabled>
+                        <label for="phone" class="form-label">Teléfono</label>
+                    </div>
+                    <div class="col-5 col-sm-2 mt-2 form-floating" >
+                        <input class="form-control" id="nacim" name="nacim" value="{{paciente.nacim|date:"Y-m-d"}}" type="date" disabled>
+                        <label for="nacim" class="form-label">Fecha de Nacimiento</label>
+                    </div>
+                    <div class="col-5 col-sm-1 mt-2 form-floating" >
+                        <input class="form-control" id="edad" name="edad" value="{{edad}}" type="text" disabled>
+                        <label for="edad" >Edad</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-1 col-sm-1 mt-2 form-floating"></div>
+                    <div class="col-5 col-sm-3 mt-2 form-floating">
+                        <select name="genero" id="genero" class="form-select" aria-label="Default select example" placeholder="Género"  disabled>
+                            {% if paciente.genero %}
+                            <option value="{{paciente.genero}}" > {{paciente.get_genero_display }} </option>
+                            {% else %}
+                            <option value="{{paciente.genero}}" > Aún no se ha definido </option>
+                            {% endif %}
+                        </select>
+                        <label for="genero" class="form-label"> Género </label>
+                    </div>
+
+                    <div class="col-5 col-sm-3 mt-2 form-floating">
+                        <select name="grupoSangre" id="grupoSangre" class="form-select" aria-label="Default select example" placeholder="Grupo de Sangre"  disabled>
+                            {% if paciente.grupoSangre %}
+                            <option value="{{paciente.grupoSangre}}" > {{paciente.get_grupoSangre_display}} </option>
+                            {% else %}
+                            <option value="{{paciente.grupoSangre}}" > Aún no se ha definido </option>
+                            {% endif %}
+                        </select>
+                        <label for="grupoSangre" class="form-label"> Grupo de Sangre </label>
+                    </div>
+                    <div class="col-5 col-sm-3 mt-2 form-floating">
+                        <select name="salud" id="salud" class="form-select" aria-label="Default select example" placeholder="Sistema de Salud" disabled>
+                            {% if paciente.salud %}
+                            <option value="{{paciente.salud}}" > {{paciente.salud}} </option>
+                            {% else %}
+                            <option >  <p style="color: red;" >Aún no se ha definido</p>  </option>
+                            {% endif %}
+                        </select>
+                        <label for="salud" class="form-label" > Sistema de Salud </label>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-4 mt-4">
+                <a href="{% url 'A01Seg:PacienteUpdate' paciente.id %}" class='btn btn-warning' title='Editar datos del paciente: {{paciente.user.username}}'>
+                    <i class="fas fa-pen"></i>&nbsp;&nbsp; Editar Perfil
+                </a>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+{% endblock %}

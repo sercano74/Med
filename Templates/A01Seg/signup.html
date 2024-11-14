@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<main class="container  mt-10">
+    <div class="row justify-content-md-center">
+        <div class="col-md-10 center-md-10">
+
+            <form method="POST" class="card card-body" enctype='multipart/form'>
+                <h4 class="text-center display-1">Signup</h4>
+                <hr>
+                {{error}}
+                <hr>
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="first_name" > Nombres </label>
+                            <input autofocus type="text" class="form-control" id ="first_name" name="first_name" placeholder="Escribre tus nombres">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="last_name" > Apellidos </label>
+                            <input type="text" class="form-control" id ="last_name" name="last_name" placeholder="Escribre tus apellidos">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="username" > Nombre de usuario</label>
+                            <input type="text" class="form-control" id ="username" name="username" placeholder="Escribre como quieras que te mencionen.">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="email" > Email </label>
+                            <input type="email" class="form-control" id ="email" name="email" placeholder="un@ejemplo.cl">
+                        </div>
+                    </div>
+                </div>
+
+                {% comment %} <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="direccion" > Dirección </label>
+                            <input type="text" class="form-control" id ="direccion" name="direccion" placeholder="Barrio/Población Avenida/Calle">
+
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="numero" > Número </label> </label>
+                            <input type="text" class="form-control" id ="numero" name="numero" placeholder="Dpto/Casa/Oficina N°">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="comuna" > Comuna </label> </label>
+                            <select class="form-select" aria-label="Selecciona tu comuna" name="comuna" id="comuna">
+                                <option selected>Selecciona tu comuna</option>
+                                <option value="1">Rancagua</option>
+                                <option value="2">Machalí</option>
+                                <option value="3">Graneros</option>
+                            </select>
+                        </div>
+                    </div>
+                </div> {% endcomment %}
+
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="password1" > Contraseña </label>
+                            <input type="password" class="form-control" id ="password1" name="password1" placeholder="Escribre tu contraseña.">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="mb-3">
+                            <label for="password2" > Confirma tu contraseña : </label>
+                            <input type="password" class="form-control" id ="password2" name="password2" placeholder="Confirma tu contraseña.">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating">
+                            <select class="form-select" id="rol" name="rol" aria-label="Floating label select example" required>
+                                <option selected disabled>Select your role</option>
+                                <option value="Pac">Paciente</option>
+                                <option value="Med">Médico</option>
+                                <option value="Adm">Administrador</option>
+                                <option value="Fun">Funcionario</option>
+                            </select>
+                            <label for="rol"><strong>ROL</strong></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col mt-3">
+                    <div class=" row justify-content-md-center">
+                        <button type="submit" class="btn btn-primary" style="color: white; border:10px; width:30%"> Regístrate </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</main>
+
+{% endblock content %}
+
+

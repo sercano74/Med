@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}Pacientes{% endblock %}
+
+{% block content %}
+
+
+<div class="card">
+
+    <div class="card-header hstack gap-1 ">
+        <div class="row d-flex justify-content">
+            <div class="col col-sm-2"><div class="w-50"><img class="card-img-top" src="{% static 'Images/pacientes.png'%}" alt="Image not found" width="40rem" ></div></div>
+            <div class="col col-sm-2"><h2><strong>Pacientes </strong></h2></div>
+            <div class="col col-sm-2"><h3><strong>{% now "d-m-Y" %}</h3></strong></div>
+            <div class="col col-sm-4"> <h3><strong>Messages</strong></h3></div>
+            <div class="col col-sm-2">
+                <div class="d-flex justify-content">
+                    <a href="{% url 'A01Seg:PacienteCreate' %}" class="btn btn-primary">
+                        <i class="bi bi-plus-square-fill" >&nbsp;&nbsp;Agregar</i>
+                    </a>
+                </div>
+                {% comment %}  {% endcomment %}
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <table class="table table-hover table-striped table-bordered" id="example">
+            <thead >
+                <tr class="table-secondary text-center">
+
+                    <th scope="col" style="width:10%" >Image</th>
+                    <th scope="col" style="width:15%" >Fisrt name</th>
+                    <th scope="col" style="width:15%" >Last name</th>
+                    <th scope="col" style="width:10%" >Phone</th>
+                    <th scope="col" style="width:15%" >Email</th>
+                    <th scope="col" style="width:7%" >Isapre</th>
+                    <th scope="col" style="width:7%" > Cumple</th>
+                    <th scope="col" style="width:8%" >Estado</th>
+                    <th scope="col" style="width:10%" >Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in pacientes %}
+                <tr>
+                    <td>
+                        <a {% if i.image %} href="{{i.image.url}}" {% endif %} class='btn btn-secondary' target="_blank" title='Ver imagen en una nueva página'>
+                                <img class="img-fluid" {% if i.image %} src="{{i.image.url}}" {% endif %} alt="No image" style="height:auto; width: 5rem">
+                        </a>
+                    </td>
+                    <td scope="row">&nbsp;&nbsp;{{i.user.first_name}}</td>
+                    <td scope="row">&nbsp;&nbsp;{{i.user.last_name}}</td>
+                    <td>&nbsp;&nbsp;{{i.phone}}</br></td>
+                    <td>&nbsp;&nbsp;{{i.user.email}}</td>
+                    <td>&nbsp;&nbsp;{{i.salud}}</td>
+                    <td>&nbsp;&nbsp;{% if i.nacim|date:"m" == now|date:"m" and i.nacim|date:"d" == now|date:"d" %} Feliz Cumpleaños!!!{% endif %} </td>
+                    {% comment %}  {% endcomment %}
+                    <td>&nbsp;&nbsp;{{i.get_estado_display}}</td>
+                    <td>
+                        <div class="row justify-content-md-evenly">
+                            <div class="col-4">
+                                <a href="{% url 'A01Seg:PacienteRead' i.id %}"  class='btn btn-info' title='Detalle del paciente: {{i.user.username}}'>
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                {% comment %} target="_blank" {% endcomment %}
+                            </div>
+                            <div class="col-4">
+                                <a href="{% url 'A01Seg:PacienteUpdate' i.id %}" class='btn btn-warning' title='Editar datos del paciente: {{i.user.username}}'>
+                                    <i class="fas fa-pen"></i>
+                                </a>
+                            </div>
+                            <div class="col-4">
+                                <a href="{% url 'A01Seg:PacienteDelete' i.id %}" class='btn btn-danger btn-actions' title='Borrar paciente: {{i.user.username}}'>
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}

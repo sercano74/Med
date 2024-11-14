@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}Fichas{% endblock %}
+
+{% block content %}
+
+
+<div class="card">
+
+    <div class="card-header ">
+        <div class="row ">
+            <div class="col-sm-2"> <img class="card-img-top" src="{% static 'Images/FichasMed.png'%}" alt="Image not found" width="40rem" ></div>
+            <div class="col-sm-4"> <h2><strong>Listado General De Fichas Médicas </strong></h2></div>
+            <div class="col-sm-2"> <h3><strong>{% now "d-m-Y" %}</h3></strong></div>
+            <div class="col-sm-2"> <h3>Usuario : <strong>{{user.last_name}}</strong></h3></div>
+            <div class="col-sm-2">
+
+
+
+                {% if puede_crear_ficha %}
+                    <a href="{% url 'A04Fic:FichaCreate' %}" class="btn btn-primary"> <i class="bi bi-plus-square-fill" >&nbsp;&nbsp;Agregar</i> </a>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <table class="table table-hover table-striped table-bordered" id="example">
+            <thead >
+                <tr class="table-secondary text-center">
+
+                    <th scope="col" style="width:10%" >F. Med Id</th>
+                    <th scope="col" style="width:10%" >Fecha</th>
+                    <th scope="col" style="width:15%" >Paciente</th>
+                    <th scope="col" style="width:15%" >Médico</th>
+                    <th scope="col" style="width:15%" >Motivo Consulta</th>
+                    <th scope="col" style="width:15%" >Diagnóstico</th>
+                    <th scope="col" style="width:10%" >Estado</th>
+                    <th scope="col" style="width:10%" >Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in objetos %}
+                <tr>
+                    <td scope="row"> &nbsp;&nbsp;{{i.id}}</td>
+                    <td> &nbsp;&nbsp;{{i.fecha | date:"Y-M-d"}}</br></td>
+                    <td scope="row"> &nbsp;&nbsp;{{i.paciente.user.first_name}} {{i.paciente.user.last_name}}</td>
+                    <td scope="row"> &nbsp;&nbsp;{{i.medico.user.first_name}} {{i.medico.user.last_name}} ({{i.medico.especialidad}}) </td>
+                    <td> &nbsp;&nbsp;{{i.motivo}}</td>
+                    <td> &nbsp;&nbsp;{{i.diagnosis}}</td>
+                    <td> &nbsp;&nbsp;{{i.get_estado_display}}</td>
+                    <td>
+                        <div class="row justify-content-md-evenly">
+                            <div class="col-4">
+                                <a href="{% url 'A04Fic:FichaRead' i.id %}"  class='btn btn-info' title='Ver Ficha Médica {{i.id}}'>
+                                    <i class="bi bi-eye"></i>
+                                </a>
+                                {% comment %} {% url 'A01Seg:MedicoRead' i.id %} target="_blank" {% endcomment %}
+                            </div>
+                            <div class="col-4">
+                                <a href="" class='btn btn-warning' title='Editar datos del paciente: {{i.user.username}}'>
+                                    <i class="fas fa-pen"></i>
+                                </a>
+                                {% comment %} {% url 'A01Seg:PacienteUpdate' i.id %} {% endcomment %}
+                            </div>
+                            <div class="col-4">
+                                <a href="" class='btn btn-danger btn-actions' title='Borrar paciente: {{i.user.username}}'>
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                                {% comment %} {% url 'A01Seg:PacienteDelete' i.id %} {% endcomment %}
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}
